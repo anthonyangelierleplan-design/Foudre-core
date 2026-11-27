@@ -369,7 +369,8 @@ int cmdVerifie (const Args& args)
 
     // 3. macros Hydrasynth (CC 16 a 23)
     if (! nouveau (h)) return 2;
-    if (! h->plugin->acceptsMidi()) res ("??", "Macros Hydrasynth (CC 16-23)", "le plugin ne recoit pas le MIDI : les macros ne peuvent pas suivre l'Hydrasynth");
+    if (! h->plugin->acceptsMidi() && ! instrument) res ("--", "Macros Hydrasynth (CC 16-23)", "effet sans MIDI : normal, regle sans objet");
+    else if (! h->plugin->acceptsMidi())            res ("KO", "Macros Hydrasynth (CC 16-23)", "instrument qui ne recoit pas le MIDI");
     else
     {
         auto& ps = h->plugin->getParameters();

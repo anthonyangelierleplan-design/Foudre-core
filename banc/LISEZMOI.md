@@ -49,7 +49,7 @@ Le WAV est écrit en 32 bits flottants : rien n'est écrêté dans le fichier, m
 | Fenêtre redimensionnable | ouvre l'interface et demande si elle est redimensionnable |
 | Démarrage neutre (instrument) | joue un do 3 (vélocité 100) avec le réglage d'ouverture : KO si crête > -1 dBFS, à regarder si > -10 LUFS |
 | Démarrage neutre (effet) | entrée muette → sortie muette ; sinus 1 kHz à -18 dBFS → même volume (±1 dB, plus bas accepté) et pas d'harmoniques ajoutées (< -40 dB) |
-| Macros Hydrasynth | balaye chaque CC 16 à 23 et regarde quel réglage bouge |
+| Macros Hydrasynth | balaye chaque CC 16 à 23 et regarde quel réglage bouge (sans objet pour les effets : ils ne reçoivent pas le MIDI, c'est voulu) |
 | Cran magnétique au zéro | ne peut pas se vérifier sans souris : à faire à la main |
 
 Les seuils sont dans `core/FoudreRegles.h` : un seul endroit pour toute la gamme.

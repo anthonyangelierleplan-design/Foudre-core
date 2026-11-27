@@ -6,6 +6,7 @@
 namespace foudre::regles
 {
 // ---- Hydrasynth : les 8 macros du clavier envoient les CC 16 a 23 (macro 1 = CC 16 ... macro 8 = CC 23)
+// Regle des instruments : les effets (Orage FX, Zephyr FX, Zenith...) ne recoivent pas le MIDI, c'est voulu.
 constexpr int premierCcMacro = 16;
 constexpr int nombreMacros   = 8;
 constexpr int dernierCcMacro = premierCcMacro + nombreMacros - 1;
