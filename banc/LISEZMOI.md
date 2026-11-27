@@ -12,6 +12,7 @@ Programme compilé : `build\banc\FoudreBanc_artefacts\Release\foudre-banc.exe`
 |---|---|
 | `foudre-banc infos Plugin.vst3` | type (instrument / effet), canaux, latence, presets |
 | `foudre-banc params Plugin.vst3 [filtre]` | liste des réglages avec leur valeur (`params Orage.vst3 Amp`) |
+| `foudre-banc capture Plugin.vst3 --sortie f.png` | photo de l'interface (`--onglet 1` : page ARP d'Orage / Zephyr ; `--taille 1400x900` ; accepte `--etat`, `--param`, `--programme`) |
 | `foudre-banc rendu Plugin.vst3 --sortie son.wav` | joue, enregistre, puis affiche les mesures |
 | `foudre-banc mesure son.wav [autre.wav ...]` | mesure des fichiers existants (un enregistrement de l'Hydrasynth, par exemple) |
 | `foudre-banc compare reference.wav rendu.wav` | écarts de volume et de spectre, résumé en clair |

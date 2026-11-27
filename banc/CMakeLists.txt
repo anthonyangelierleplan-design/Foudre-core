@@ -6,7 +6,8 @@ set_target_properties(FoudreBanc PROPERTIES OUTPUT_NAME "foudre-banc")
 
 target_sources(FoudreBanc PRIVATE
     Source/Main.cpp
-    Source/Console.cpp)
+    Source/Console.cpp
+    Source/Capture.cpp)
 
 target_compile_definitions(FoudreBanc PRIVATE
     JUCE_PLUGINHOST_VST3=1

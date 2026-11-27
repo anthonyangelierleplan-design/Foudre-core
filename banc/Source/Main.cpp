@@ -8,6 +8,8 @@
 #include <map>
 
 void foudreConsoleUtf8();   // Console.cpp
+bool foudreCapture (void* fenetre, const juce::File& png, juce::String& erreur);   // Capture.cpp
+// (void* fenetre, const juce::File& png, juce::String& erreur);
 
 using namespace foudre;
 namespace regles = foudre::regles;
@@ -405,6 +407,43 @@ int cmdVerifie (const Args& args)
     return ko > 0 ? 1 : 0;
 }
 
+// ------------------------------------------------------------------ photo de l'interface
+int cmdCapture (const Args& args)
+{
+    if (args.pos.isEmpty()) return echec ("indiquez le .vst3");
+    // --onglet N : les plugins Foudre Audio lisent FOUDRE_ONGLET a l'ouverture de leur fenetre (0 SYNTH, 1 ARP, 2 EFFECTS).
+    // (Des clics simules ne marchent pas : JUCE lit la vraie position du curseur, qu'on ne deplace pas.)
+#ifdef _WIN32
+    if (args.a ("onglet")) _putenv_s ("FOUDRE_ONGLET", args.v ("onglet").toRawUTF8());
+#endif
+    Hote h;
+    if (! prepare (h, args, fichier (args.pos[0]))) return 2;
+    if (! h.plugin->hasEditor()) return echec ("le plugin n'a pas d'interface");
+    std::unique_ptr<juce::AudioProcessorEditor> ed (h.plugin->createEditorIfNeeded());
+    if (ed == nullptr) return echec ("l'interface ne s'ouvre pas");
+    if (args.a ("taille"))
+    {
+        const auto t = juce::StringArray::fromTokens (args.v ("taille"), "x", "");
+        if (t.size() == 2) ed->setSize (t[0].getIntValue(), t[1].getIntValue());
+    }
+    ed->setTopLeftPosition (40, 40);
+    ed->addToDesktop (0);
+    ed->setVisible (true);
+    Hote::laisseTourner (900);
+    void* fen = ed->getPeer() != nullptr ? ed->getPeer()->getNativeHandle() : nullptr;
+    if (fen == nullptr) return echec ("pas de fenetre");
+    Hote::laisseTourner (400);
+    const auto png = fichier (args.v ("sortie", "capture.png"));
+    juce::String err;
+    const bool ok = foudreCapture (fen, png, err);
+    ed->removeFromDesktop();
+    ed.reset();
+    Hote::laisseTourner (100);
+    if (! ok) return echec (err);
+    dit ("capture : " + png.getFullPathName());
+    return 0;
+}
+
 void aide()
 {
     dit ("foudre-banc : banc d'essai des plugins Foudre Audio (sans Ableton)\n"
@@ -415,6 +454,7 @@ void aide()
          "  foudre-banc mesure   f.wav [g.wav ...]           niveaux, loudness, spectre, clics\n"
          "  foudre-banc compare  reference.wav rendu.wav     ecarts de volume et de spectre\n"
          "  foudre-banc verifie  Plugin.vst3                 regles de la gamme (fenetre, demarrage neutre, CC 16-23)\n"
+         "  foudre-banc capture  Plugin.vst3 --sortie f.png  photo de l'interface (--onglet 1 = ARP ; --taille 1400x900)\n"
          "\n"
          "Options de rendu :\n"
          "  --notes 60,64,67   --velocite 100   --duree 2 (note tenue, s)   --queue 1.5 (apres relache, s)\n"
@@ -440,6 +480,7 @@ int main (int argc, char* argv[])
     else if (cmd == "mesure")  r = cmdMesure (args);
     else if (cmd == "compare") r = cmdCompare (args);
     else if (cmd == "verifie") r = cmdVerifie (args);
+    else if (cmd == "capture") r = cmdCapture (args);
     else { aide(); r = cmd.isEmpty() || cmd == "aide" ? 0 : 2; }
     return r;
 }

@@ -4,6 +4,8 @@ Tronc commun de la gamme Foudre Audio. Les règles générales (français, novic
 
 ## Carte
 - `core/FoudreRegles.h` : règles de la gamme en code (CC 16-23 des macros, seuils de démarrage neutre, cran au zéro). C++17 pur, sans JUCE. **Changer un seuil ici le change pour tout le banc.**
+- `core/FoudreAccords.h` : Chord Seq (regroupement des notes, nom des accords), utilisé par Orage et Zephyr. Les plugins le récupèrent par FetchContent **figé sur un commit** : après une modification, mettre à jour `GIT_TAG` dans leur `CMakeLists.txt`.
+- `banc/Source/Capture.cpp` : capture PNG de l'interface (Windows, PrintWindow) ; onglet choisi par `FOUDRE_ONGLET`, lu par les plugins.
 - `banc/Source/Mesures.h` : mesures (niveaux, LUFS BS.1770, clics, spectre, distorsion), sans JUCE.
 - `banc/Source/Hote.h` : hôte VST3 hors ligne (chargement, paramètres, rendu, WAV, signaux de test).
 - `banc/Source/Main.cpp` : commandes `infos`, `params`, `rendu`, `mesure`, `compare`, `verifie`.

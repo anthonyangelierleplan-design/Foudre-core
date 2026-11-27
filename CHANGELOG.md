@@ -1,5 +1,9 @@
 # Historique
 
+## v2 — accords et captures (27 nov. 2026)
+- `core/FoudreAccords.h` : Chord Seq commun à Orage (v24) et Zephyr (v5) : `GroupeurAccord` (notes jouées à moins de 60 ms = même pas, 6 notes au plus), `nomAccord` (majeurs, mineurs, 7e, maj7, m7♭5, sus, 6, 9, 11…, renversements « C/E »), `rangeNotes`. Tests : `tools/tests/accords.cpp`.
+- **foudre-banc capture** : photo de l'interface d'un plugin en PNG (`--onglet 1` = page ARP d'Orage / Zephyr, `--taille`). Des clics simulés ne marchent pas (JUCE lit la vraie position du curseur) : les plugins lisent `FOUDRE_ONGLET` à l'ouverture de leur fenêtre.
+
 ## v1 — banc d'essai (27 nov. 2026)
 - Création du tronc commun Foudre-Core.
 - `core/FoudreRegles.h` : règles de la gamme (macros Hydrasynth CC 16-23, démarrage neutre, cran au zéro).
