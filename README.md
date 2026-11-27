@@ -21,7 +21,7 @@ Le banc est dans `build\banc\FoudreBanc_artefacts\Release\foudre-banc.exe`. Sur 
 
 Dans le `CMakeLists.txt` du plugin, après JUCE :
 ```cmake
-FetchContent_Declare(FoudreCore GIT_REPOSITORY https://github.com/anthonyangelierleplan-design/Foudre-Core.git GIT_TAG main)
+FetchContent_Declare(FoudreCore GIT_REPOSITORY https://github.com/anthonyangelierleplan-design/Foudre-core.git GIT_TAG main)
 FetchContent_MakeAvailable(FoudreCore)
 target_link_libraries(MonPlugin PRIVATE foudre::core)
 ```
