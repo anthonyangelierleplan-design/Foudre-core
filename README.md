@@ -6,6 +6,7 @@ Le code partagé par toute la gamme (Orage, Zephyr, Zenith…) et les outils pou
 
 - **`core/`** — code commun, sans JUCE, que chaque plugin peut inclure :
   - `FoudreRegles.h` : les règles de la gamme écrites une seule fois (macros de l'Hydrasynth sur les CC 16 à 23, seuils du démarrage neutre, cran magnétique au zéro).
+  - `FoudreTape.h` : module TAPE d'Orage et Zephyr, calé sur un magnétophone Philips D6410 mesuré (outil de comparaison : `tools/tape/tape-wav.cpp`).
   - `FoudreAccords.h` : Chord Seq d'Orage et Zephyr (notes jouées ensemble → un pas, nom des accords Fm7, D♭maj7, C/E…).
 - **`banc/`** — **foudre-banc**, le banc d'essai : charge un `.vst3` sans Ableton, joue des notes ou un signal, enregistre un WAV, le mesure, le compare à une référence et vérifie les règles de la gamme. Mode d'emploi : [`banc/LISEZMOI.md`](banc/LISEZMOI.md).
 - **`tools/tests/`** — tests automatiques (les mesures du banc vérifiées sur des signaux connus).
@@ -32,6 +33,6 @@ puis `#include "FoudreRegles.h"`. Le banc n'est pas compilé quand Foudre-Core e
 
 Orage et Zephyr ont les mêmes fichiers mais leur contenu a divergé partout. À rapatrier ici, un module à la fois, chacun testé à l'oreille dans les deux plugins :
 1. l'arpégiateur / séquenceur : les accords sont partagés (`FoudreAccords.h`, fait) ; le moteur reste dans chaque dépôt (celui de Zephyr fait tourner les pas sur 4 VCO, façon Mono/Poly) ;
-2. le module TAPE (remplacera CASSETTE / VHS, calé sur les enregistrements d'un vrai magnétophone) ;
+2. le module TAPE (fait : `FoudreTape.h`, remplace CASSETTE / VHS) ;
 3. les thèmes et l'ergonomie (potards, cran au zéro, fenêtre) ;
 4. les modules qui font la couleur de chaque synthé (filtres, VCO) **restent** dans leur dépôt.
